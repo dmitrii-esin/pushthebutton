@@ -4,6 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions  from '../flux/actions.js';
 
+const mapStateToProps = state => ({
+    currentUserData: state.pushthebutton.currentUserData
+});
+
 const mapActionsToProps = (dispatch, props) => ({
     actions: bindActionCreators(actions, dispatch)
 });
@@ -14,11 +18,19 @@ class LeadingLoginContainer extends Component {
 
         this.onChangeLogin = this.onChangeLogin.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmitLogin = this.onSubmitLogin.bind(this);
+        this.onAuth = this.onAuth.bind(this);
         this.onMainScreen = this.onMainScreen.bind(this);
 
         this.state = { login: '', password: '' }
     } 
+
+    // static getDerivedStateFromProps(nextProps, prevState){
+    //     const prevProps = this.props;
+
+    //     if (nextProps.currentUserData.authType === 'leading') {
+    //         this.props.navigation.navigate('LeadingTable');
+    //     }
+    // }
 
     onChangeLogin(login) {
         this.setState({ login })
@@ -28,14 +40,15 @@ class LeadingLoginContainer extends Component {
         this.setState({ password })
     }
 
-    onSubmitLogin() {  
+    onAuth() {  
         const { login, password } = this.state;
 
-        this.props.actions.provideCredentials({ login, password });
+        this.props.actions.setAuthLeading({ login, password, authType: 'leading' });
     }
 
     onMainScreen(login) {
         this.props.navigation.navigate('Main');
+        this.props.actions.setSignOut(this.state.login);
     }
 
   render() {
@@ -55,6 +68,6 @@ class LeadingLoginContainer extends Component {
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapActionsToProps
 )(LeadingLoginContainer);

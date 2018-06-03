@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
 import PlayerButtonScreen from '../components/PlayerButtonScreen.js';
-// import { bindActionCreators } from 'redux';
-// import { connect } from 'react-redux';
-// import * as actions  from '../flux/actions.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions  from '../flux/actions.js';
 
-// const mapStateToProps = state => ({
-//     isButtonPushed: state.isButtonPushed
-//   });
-//
-//   const mapActionsToProps = (dispatch, props) => ({
-//     actions: bindActionCreators(actions, dispatch)
-//   });
+const mapStateToProps = state => ({
+    login: state.pushthebutton.currentUserData.login,
+    //todo здесь подтягиваем асинхронно из базы список игроков, если в нём что-то изменилось
+    playerList: state.pushthebutton.playerList
+});
 
-export default class PlayerButtonContainer extends Component {
+const mapActionsToProps = (dispatch, props) => ({
+    actions: bindActionCreators(actions, dispatch)
+});
+
+class PlayerButtonContainer extends Component {
     constructor(props){ 
         super(props);
 
         this.onVote = this.onVote.bind(this);
     } 
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const prevProps = this.props;
+
+        if (!nextProps.playerList.find(player => player.login === prevProps.login)) {
+            this.props.navigation.navigate('Main');
+        }
+    }
+
     onVote() {  
-       console.log('vote!');
+        this.props.actions.pushTheButton(this.props.login);
     }
 
   render() {
@@ -31,3 +41,8 @@ export default class PlayerButtonContainer extends Component {
     );
   }
 }
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(PlayerButtonContainer);

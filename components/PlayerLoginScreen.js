@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity  } from 'react-native';
 
-const PlayerLoginScreen = ({onMainScreen, onSubmitLogin, onChangeLogin, onChangePassword, login, password}) => {
+const PlayerLoginScreen = ({onMainScreen, onAuth, onChangeLogin, onChangePassword, login, password}) => {
     return (
       <View style={styles.container}>
             <Text style={styles.title} numberOfLines={1}>Игрок, введите логин и пароль:</Text>
@@ -24,7 +24,7 @@ const PlayerLoginScreen = ({onMainScreen, onSubmitLogin, onChangeLogin, onChange
                 value={password}
             />
             <View style={styles.buttonBox}>
-                <TouchableOpacity onPress={onSubmitLogin} style={styles.button}>
+                <TouchableOpacity onPress={onAuth} style={styles.button}>
                     <Text style={styles.buttonText}>Войти</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onMainScreen} style={styles.button}>
@@ -80,20 +80,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold'
     }
-  });
-
-//   MainScreen.defaultProps = {
-//   };
-
-//   MainScreen.propTypes = {
-//   };
-
-//   Profile.propTypes = {
-//     user: React.PropTypes.shape({       
-//         firstName: React.PropTypes.string,
-//         lastName: React.PropTypes.string,
-//         photo: PropTypes: string
-//     })
-// };
+});
 
   export default PlayerLoginScreen;

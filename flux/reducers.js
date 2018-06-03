@@ -1,46 +1,118 @@
 import * as TYPE from '../const/actionTypes.js';
 
 const initialState = {
-  authType: '',
-  credentials: { login: '', password: '' },
-  playerList: [],
-  isButtonPushed: false
+    isAuthFetching: false,
+    currentUserData: {
+        login: '',
+        authType: '',
+        isButtonPushed: false
+    },
+    playerList: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case TYPE.SET_AUTH:
-    // return {
-    //   ...state,
-    //   authType: action.payload.authType
-    // }
-
-    case TYPE.PROVIDE_CREDENTIALS:
+    case TYPE.FETCH_AUTH_PLAYER:
     return {
-      ...state,
-      credentials: action.payload.credentials
+        ...state,
+        isAuthFetching: true
     }
 
-    // case TYPE.ADD_PLAYER:
-    // return {
-    //   ...state,
-    //   playerList: [...state.playerList, action.payload.playerData]
-    // }
+    case TYPE.RECEIVE_AUTH_PLAYER:
+    return {
+        ...state,
+        isAuthFetching: false,
+        currentUserData: {
+            login: action.payload.login,
+            authType: action.payload.authType,
+            isButtonPushed: false
+        },
+        playerList: state.playerList.push(
+            {login: action.payload.login, status: action.payload.status}
+        ) 
+    }
+
+    case TYPE.FAIL_AUTH_PLAYER:
+    return {
+        ...state,
+        isAuthFetching: false
+    }
+
+    case TYPE.FETCH_AUTH_LEADING:
+    return {
+        ...state,
+        isAuthFetching: true
+    }
+
+    case TYPE.RECEIVE_AUTH_LEADING:
+    return {
+        ...state,
+        isAuthFetching: false,
+        currentUserData: {
+            login: action.payload.login,
+            authType: action.payload.authType
+        },
+    }
+
+    case TYPE.FAIL_AUTH_LEADING:
+    return {
+        ...state,
+        isAuthFetching: false
+    }
+
+    case TYPE.FETCH_SIGN_OUT:
+    return {
+        ...state,
+        isAuthFetching: true
+    }
+
+    case TYPE.RECEIVE_SIGN_OUT:
+    return {
+        ...state,
+        isAuthFetching: false,
+        currentUserData: {
+            login: '',
+            authType: '',
+            isButtonPushed: false
+        },
+        playerList: state.playerList.filter(player => player.login !== action.payload.login)
+    }
+
+    case TYPE.FAIL_SIGN_OUT:
+    return {
+        ...state,
+        isAuthFetching: false
+    }
 
     case TYPE.PUSH_THE_BUTTON:
     return {
-      ...state,
-      isButtonPushed: true
+        ...state,
+        currentUserData: Object.assign(
+            {},
+            state.currentUserData,
+            { isButtonPushed: true }
+        ),
+        playerList: state.playerList.map(player => player.login === action.payload.login 
+            ? {login: player.login, status: action.payload.status}
+            : player
+        )
     }
 
-    // case TYPE.RESET_ALL:
-    // return {
-    //   ...state,
-    //   authType: '',
-    //   credentials: { name: '', password: ''},
-    //   playerList: [],
-    //   isButtonPushed: false
-    // }
+    case TYPE.RESET_PLAYER_LIST:
+    return {
+        playerList: []
+    }
+
+    case TYPE.RESET_ALL:
+    return {
+        isAuthFetching: false,
+        currentUserData: {
+            login: '',
+            authType: '',
+            isButtonPushed: false
+        },
+        playerList: []
+    }
 
     default:
       return state

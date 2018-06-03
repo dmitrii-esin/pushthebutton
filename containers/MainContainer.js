@@ -3,15 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions  from '../flux/actions.js';
 import MainScreen from '../components/MainScreen.js';
-
-const mapStateToProps = state => ({
-    playerList: state.pushthebutton.playerList,
-    isButtonPushed: state.pushthebutton.isButtonPushed
-  });
   
-  const mapActionsToProps = (dispatch, props) => ({
+const mapActionsToProps = (dispatch, props) => ({
     actions: bindActionCreators(actions, dispatch)
-  });
+});
   
  class MainContainer extends Component {
      constructor(props){ 
@@ -40,6 +35,6 @@ const mapStateToProps = state => ({
 }
 
 export default connect(
-    mapStateToProps,
+    null,
     mapActionsToProps
 )(MainContainer);

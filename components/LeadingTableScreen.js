@@ -1,22 +1,22 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 
-const LeadingTableScreen = ({ playersData, onMainScreen, onResetAll }) => {
+const LeadingTableScreen = ({ playerList, onMainScreen, onResetPLayerList }) => {
     return (
       <View style={styles.container}>
           <Text style={styles.title} numberOfLines={1}>Результаты голосования:</Text>
           <View style={styles.listContainer}>
               <FlatList
-                  data={playersData}
-                  renderItem={({item}) => <Text style={[styles.item, item.isVote && styles.isVote]}>{item.player} : {item.isVote ? 'Игрок проголосовал за!' : 'Игрок не проголосовал'}</Text>}
+                  data={playerList}
+                  renderItem={({player}) => <Text style={[styles.player, player.status && styles.isVote]}>{player.login} : {player.status ? 'Игрок проголосовал за!' : 'Игрок не проголосовал'}</Text>}
               />
            </View>
             <View style={styles.buttonWrap}>
                 <TouchableOpacity onPress={onMainScreen} style={styles.button}>
                     <Text style={styles.buttonText}>На главный экран</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onResetAll} style={styles.button}>
-                        <Text style={styles.buttonText}>Сбросить</Text>
+                <TouchableOpacity onPress={onResetPLayerList} style={styles.button}>
+                    <Text style={styles.buttonText}>Сбросить список игроков</Text>
                 </TouchableOpacity>
              </View>
           </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       flex: 1,
       marginBottom: 20
     },
-    item: {
+    player: {
       color:  'rgba(8,22,68,.8)',
       fontSize: 18,
       fontWeight: 'bold'
@@ -70,19 +70,5 @@ const styles = StyleSheet.create({
       borderRadius: 2
     }
   });
-
-//   MainScreen.defaultProps = {
-//   };
-
-//   MainScreen.propTypes = {
-//   };
-
-//   Profile.propTypes = {
-//     user: React.PropTypes.shape({       
-//         firstName: React.PropTypes.string,
-//         lastName: React.PropTypes.string,
-//         photo: PropTypes: string
-//     })
-// };
 
   export default LeadingTableScreen;

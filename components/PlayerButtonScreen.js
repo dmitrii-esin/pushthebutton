@@ -41,20 +41,6 @@ const styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: 'bold'
     }
-  });
+});
 
-//   MainScreen.defaultProps = {
-//   };
-
-//   MainScreen.propTypes = {
-//   };
-
-//   Profile.propTypes = {
-//     user: React.PropTypes.shape({       
-//         firstName: React.PropTypes.string,
-//         lastName: React.PropTypes.string,
-//         photo: PropTypes: string
-//     })
-// };
-
-  export default PlayerButtonScreen;
+export default PlayerButtonScreen;
