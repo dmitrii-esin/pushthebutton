@@ -27,8 +27,8 @@ export default (state = initialState, action) => {
             authType: action.payload.authType,
             isButtonPushed: false
         },
-        playerList: state.playerList.push(
-            {login: action.payload.login, status: action.payload.status}
+        playerList: state.playerList.concat(
+            { login: action.payload.login, status: action.payload.status }
         ) 
     }
 
@@ -93,13 +93,14 @@ export default (state = initialState, action) => {
             { isButtonPushed: true }
         ),
         playerList: state.playerList.map(player => player.login === action.payload.login 
-            ? {login: player.login, status: action.payload.status}
+            ? { login: player.login, status: action.payload.status }
             : player
         )
     }
 
     case TYPE.RESET_PLAYER_LIST:
     return {
+        ...state,
         playerList: []
     }
 

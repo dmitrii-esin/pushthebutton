@@ -6,7 +6,7 @@ import * as actions  from '../flux/actions.js';
 
 const mapStateToProps = state => ({
     currentUserData: state.pushthebutton.currentUserData,
-    //todo здесь подтягиваем асинхронно из базы список игроков, если в нём что-то изменилось
+    //todo здесь подтягиваем асинхронно из базы список игроков, если в нём что-то изменилось на componentDidUpdate, например
     playerList: state.pushthebutton.playerList
 });
 

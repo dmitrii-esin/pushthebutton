@@ -2,21 +2,30 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 
 const LeadingTableScreen = ({ playerList, onMainScreen, onResetPLayerList }) => {
+    console.log('playerList', playerList);
     return (
       <View style={styles.container}>
           <Text style={styles.title} numberOfLines={1}>Результаты голосования:</Text>
           <View style={styles.listContainer}>
               <FlatList
                   data={playerList}
-                  renderItem={({player}) => <Text style={[styles.player, player.status && styles.isVote]}>{player.login} : {player.status ? 'Игрок проголосовал за!' : 'Игрок не проголосовал'}</Text>}
+                  renderItem={({player}) => {
+                      console.log('player', player);
+                      return (
+                        <Text style={[styles.player, player.status && styles.isVote]}
+                        >
+                            {player.login} : {player.status ? 'Игрок проголосовал за!' : 'Игрок не проголосовал'}
+                        </Text>
+                      )
+                  }}
               />
            </View>
             <View style={styles.buttonWrap}>
                 <TouchableOpacity onPress={onMainScreen} style={styles.button}>
-                    <Text style={styles.buttonText}>На главный экран</Text>
+                    <Text style={styles.buttonText}>На главный</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onResetPLayerList} style={styles.button}>
-                    <Text style={styles.buttonText}>Сбросить список игроков</Text>
+                    <Text style={styles.buttonText}>Сбросить игроков</Text>
                 </TouchableOpacity>
              </View>
           </View>

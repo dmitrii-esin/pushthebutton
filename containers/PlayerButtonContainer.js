@@ -6,7 +6,7 @@ import * as actions  from '../flux/actions.js';
 
 const mapStateToProps = state => ({
     login: state.pushthebutton.currentUserData.login,
-    //todo здесь подтягиваем асинхронно из базы список игроков, если в нём что-то изменилось
+    //todo здесь подтягиваем асинхронно из базы список игроков, если в нём что-то изменилось на componentDidUpdate, например
     playerList: state.pushthebutton.playerList
 });
 
@@ -21,11 +21,11 @@ class PlayerButtonContainer extends Component {
         this.onVote = this.onVote.bind(this);
     } 
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const prevProps = this.props;
+    componentDidUpdate(prevProps) {
+        const nextProps = this.props;
 
         if (!nextProps.playerList.find(player => player.login === prevProps.login)) {
-            this.props.navigation.navigate('Main');
+            nextProps.navigation.navigate('Main');
         }
     }
 

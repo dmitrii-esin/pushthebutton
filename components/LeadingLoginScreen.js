@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity  } from 'react-native';
 
-const LeadingLoginScreen = ({onMainScreen, onSubmitLogin, onChangeLogin, onChangePassword, login, password}) => {
+const LeadingLoginScreen = ({onMainScreen, onAuth, onChangeLogin, onChangePassword, login, password}) => {
     return (
       <View style={styles.container}>
             <Text style={styles.title} numberOfLines={1}>Ведущий, введите логин и пароль:</Text>
@@ -24,7 +24,7 @@ const LeadingLoginScreen = ({onMainScreen, onSubmitLogin, onChangeLogin, onChang
                 value={password}
             />
             <View style={styles.buttonBox}>
-                <TouchableOpacity onPress={onSubmitLogin} style={styles.button}>
+                <TouchableOpacity onPress={onAuth} style={styles.button}>
                     <Text style={styles.buttonText}>Войти</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onMainScreen} style={styles.button}>

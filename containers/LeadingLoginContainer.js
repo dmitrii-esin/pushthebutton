@@ -24,13 +24,21 @@ class LeadingLoginContainer extends Component {
         this.state = { login: '', password: '' }
     } 
 
-    // static getDerivedStateFromProps(nextProps, prevState){
-    //     const prevProps = this.props;
+    componentDidUpdate(prevProps) {
+        const nextProps = this.props;
 
-    //     if (nextProps.currentUserData.authType === 'leading') {
-    //         this.props.navigation.navigate('LeadingTable');
-    //     }
-    // }
+        if (nextProps.currentUserData.authType === 'leading') {
+            nextProps.navigation.navigate('LeadingTable');
+        }
+    }
+
+    _validateСredentials(login, password) {
+        if (login.length > 0 && password.length > 0) {
+            return true;
+        }
+
+        return false;
+    }
 
     onChangeLogin(login) {
         this.setState({ login })
@@ -43,7 +51,11 @@ class LeadingLoginContainer extends Component {
     onAuth() {  
         const { login, password } = this.state;
 
-        this.props.actions.setAuthLeading({ login, password, authType: 'leading' });
+        const isValidCredentials = this._validateСredentials(login, password);
+
+        if (isValidCredentials) {
+            this.props.actions.setAuthLeading({ login, password, authType: 'leading' });
+        } 
     }
 
     onMainScreen(login) {
@@ -58,7 +70,7 @@ class LeadingLoginContainer extends Component {
       <LeadingLoginScreen
         onChangeLogin={this.onChangeLogin}
         onChangePassword={this.onChangePassword}
-        onSubmitLogin={this.onSubmitLogin}
+        onAuth={this.onAuth}
         onMainScreen={this.onMainScreen}
         login={login}
         password={password}

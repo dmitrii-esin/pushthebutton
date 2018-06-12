@@ -20,6 +20,7 @@ export const setAuthPlayer = ({ login, password, authType }) => {
         //     }
         //   })
         //   .then((res) => {
+            
         dispatch({
             type: TYPE.RECEIVE_AUTH_PLAYER,
             payload: { login, authType, status: false }
@@ -60,7 +61,7 @@ export const setAuthLeading = ({ login, password, authType }) => {
 export const setSignOut = ({ login }) => {
     return (dispatch) => {
         dispatch({ type: TYPE.FETCH_SIGN_OUT });
-
+        
         // return firebase.initializeApp({
         //     apiKey: 'AIzaSyBtxMY4K6uHxv_2e3GD-FWAD2ACX6lPVRE',
         //     authDomain: 'authentication-70a18.firebaseapp.com',
@@ -78,14 +79,14 @@ export const setSignOut = ({ login }) => {
         //   .then((res) => {
         dispatch({
             type: TYPE.RECEIVE_SIGN_OUT,
-            payload: { login }
+            // payload: { login }
         });
         //      })
         //     .catch((error) => dispatch({ type: TYPE.FAIL_SIGN_OUT, error }));
     }
 };
 
-export const pushTheButton = ({ login }) => {
+export const pushTheButton = login => {
     return (dispatch) => {
         dispatch({
             type: TYPE.PUSH_THE_BUTTON,

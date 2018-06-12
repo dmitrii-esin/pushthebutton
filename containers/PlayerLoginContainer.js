@@ -24,15 +24,21 @@ class PlayerLoginContainer extends Component {
         this.state = { login: '', password: '' }
     } 
 
-    // static getDerivedStateFromProps(nextProps, prevState){
-    //     const prevProps = this.props;
+    componentDidUpdate(prevProps) {
+        const nextProps = this.props;
 
-    //     console.log('prevProps', prevProps);
+        if (nextProps.currentUserData.authType === 'player') {
+            nextProps.navigation.navigate('PlayerButton');
+        }
+    }
 
-    //     // if (nextProps.currentUserData.authType === 'player') {
-    //     //     this.props.navigation.navigate('PlayerButton');
-    //     // }
-    // }
+    _validateСredentials(login, password) {
+        if (login.length > 0 && password.length > 0) {
+            return true;
+        }
+
+        return false;
+    }
 
     onChangeLogin(login) {
         this.setState({ login })
@@ -45,7 +51,14 @@ class PlayerLoginContainer extends Component {
     onAuth() {  
         const { login, password } = this.state;
 
-        this.props.actions.setAuthPlayer({ login, password, authType: 'player' });
+        const isValidCredentials = this._validateСredentials(login, password);
+
+
+        console.log('isValidCredentials', isValidCredentials);
+
+        if (isValidCredentials) {
+            this.props.actions.setAuthPlayer({ login, password, authType: 'player' });
+        } 
     }
 
     onMainScreen(login) {
@@ -55,11 +68,6 @@ class PlayerLoginContainer extends Component {
 
   render() {
     const { login, password } = this.state;
-
-
-    console.log('this.props', this.props);
-
-    console.log('this.state', this.state);
 
     return (
       <PlayerLoginScreen
